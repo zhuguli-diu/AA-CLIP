@@ -147,7 +147,6 @@ def train_image_adapter(
             loss = 0.0
             det_feature = det_feature.unsqueeze(1)
             cls_preds = torch.matmul(det_feature, epoch_text_feature)[:, 0]
-            # cls_preds = torch.softmax(cls_preds, dim=-1)
             loss += F.cross_entropy(cls_preds, label)
             for f in patch_features:
                 # text-image alignment
@@ -159,7 +158,6 @@ def train_image_adapter(
             loss_list.append(loss.item())
             scheduler.step()
         logger.info(f"loss: {np.mean(loss_list)}")
-        assert np.mean(loss_list) < 20.0, ipdb.set_trace()
         # save checkpoint
         model_dict = {
             "epoch": epoch + 1,
@@ -196,13 +194,13 @@ def main():
         default="few_shot",
         choices=["few_shot", "full_shot"],
     )
-    parser.add_argument("--shot", type=int, default=32)
+    parser.add_argument("--shot", type=int, default=32, help="number of shots (0 means full shot)")
     parser.add_argument("--text_batch_size", type=int, default=16)
     parser.add_argument("--image_batch_size", type=int, default=2)
-    parser.add_argument("--text_epoch", type=int, default=5, help="epochs")
-    parser.add_argument("--image_epoch", type=int, default=50, help="epochs")
-    parser.add_argument("--text_lr", type=float, default=0.00001, help="learning rate")
-    parser.add_argument("--image_lr", type=float, default=0.0005, help="learning rate")
+    parser.add_argument("--text_epoch", type=int, default=5, help="epochs for stage1")
+    parser.add_argument("--image_epoch", type=int, default=20, help="epochs for stage2")
+    parser.add_argument("--text_lr", type=float, default=0.00001, help="learning rate for stage1")
+    parser.add_argument("--image_lr", type=float, default=0.0005, help="learning rate for stage2")
     parser.add_argument(
         "--criterion", type=str, default=["dice_loss", "focal_loss"], nargs="+"
     )

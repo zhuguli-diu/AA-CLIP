@@ -204,17 +204,17 @@ def get_dataset(
         if training_mode == "few_shot":
             assert shot > 0, "shot should be positive"
             meta_path = os.path.join(
-                "./dataset/seed", dataset_name, f"{shot}-shot.jsonl"
+                "./dataset/metadata", dataset_name, f"{shot}-shot.jsonl"
             )
         else:
-            meta_path = os.path.join("./dataset/seed", dataset_name, "full-shot.jsonl")
+            meta_path = os.path.join("./dataset/metadata", dataset_name, "full-shot.jsonl")
 
         data_path = DATA_PATH[dataset_name.split("-")[0]]
         text_dataset = BaseDataset(data_path, meta_path, img_size, text=True)
         image_dataset = BaseDataset(data_path, meta_path, img_size, text=False)
         return text_dataset, image_dataset
     elif stage == "test":
-        meta_path = os.path.join("./dataset/seed", dataset_name, "full-shot.jsonl")
+        meta_path = os.path.join("./dataset/metadata", dataset_name, "full-shot.jsonl")
         class_names = CLASS_NAMES[dataset_name]
         datasets = {}
         for class_name in class_names:
@@ -230,7 +230,7 @@ def get_dataset(
         return datasets
     elif stage == "visualize":
         class_names = CLASS_NAMES[dataset_name]
-        meta_path = os.path.join("./dataset/seed", dataset_name, "full-shot.jsonl")
+        meta_path = os.path.join("./dataset/metadata", dataset_name, "full-shot.jsonl")
         datasets = {}
         for class_name in class_names:
             image_dataset = BaseSingleClassDataset(
