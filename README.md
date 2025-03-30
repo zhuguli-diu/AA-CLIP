@@ -6,7 +6,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/yourusername/repo?style=social)](https://github.com/yourusername/repo)   -->
  Official Pytorch Implementation
 
-![The main idea of this papar](pic/teaser.png)
+![](pic/teaser.png)
 
 ## Abstract
 Anomaly detection (AD) identifies outliers for applications like defect and lesion detection. While CLIP shows promise for zero-shot AD tasks due to its strong generalization capabilities, its inherent **Anomaly-Unawareness** leads to limited discrimination between normal and abnormal features. To address this problem, we propose **Anomaly-Aware CLIP** (AA-CLIP), which enhances CLIP's anomaly discrimination ability in both text and visual spaces while preserving its generalization capability. AA-CLIP is achieved through a straightforward yet effective two-stage approach: it first creates anomaly-aware text anchors to differentiate normal and abnormal semantics clearly, then aligns patch-level visual features with these anchors for precise anomaly localization. This two-stage strategy, with the help of residual adapters, gradually adapts CLIP in a controlled manner, achieving effective AD while maintaining CLIP's class knowledge. Extensive experiments validate AA-CLIP as a resource-efficient solution for zero-shot AD tasks, achieving state-of-the-art results in industrial and medical applications. 
@@ -29,7 +29,7 @@ The datasets can be downloaded from [MVTec-AD](https://www.mvtec.com/company/res
 Put all the dataset under ``./data`` and using json files in ``./dataset/metadata/``. You can use your own dataset and generate jsonl files with below format:
 ```json
 {"image_path": "xxxx/xxxx/xxx.png", 
- "label": 1.0 or 0.0, 
+ "label": 1.0 # or 0.0, 
  "class_name": "xxxx", 
  "mask_path": "xxxx/xxxx/xxx.png"}
 ```
@@ -45,7 +45,7 @@ python test.py --save_path $save_path --dataset $dataset
 # (Optional) evaluate all the datatsets
 bash test.sh
 ```
-Model definition is in ``./model/``. We thank [```open_clip```](https://github.com/mlfoundations/open_clip.git) for being open-source.
+Model definition is in ``./model/``. We thank [```open_clip```](https://github.com/mlfoundations/open_clip.git) for being open-source. To run the code, one has to download the weight of OpenCLIP ViT-L-14-336px and put it under ```./model/```.
 
 ## Citation
 If you use this work, please cite:
