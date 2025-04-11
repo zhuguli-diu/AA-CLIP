@@ -30,25 +30,25 @@ class BaseDataset(Dataset):
         self.transforms_list = [
             transforms.RandomApply(
                 [transforms.RandomRotation(degrees=math.degrees(math.pi / 6))], p=0.5
-            ),  # 随机旋转，角度范围为[-180°, 180°]
+            ),
             transforms.RandomApply(
                 [transforms.RandomAffine(degrees=0, translate=(0.15, 0.15))], p=0.5
-            ),  # 随机平移，最大平移比例为10%
-            transforms.RandomHorizontalFlip(p=0.5),  # 以0.3的概率进行水平翻转
-            transforms.RandomVerticalFlip(p=0.5),  # 以0.3的概率进行垂直翻转
+            ),
+            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomVerticalFlip(p=0.5),
         ]
 
         transform_x = []
-        transform_x.append(AddGaussianNoise(std=1, p=0.5))
+        transform_x.append(AddGaussianNoise(std=1, p=0.7))
         if not text:
             transform_x.append(
-                transforms.RandomApply([transforms.ColorJitter(brightness=0.5)], p=0.5)
+                transforms.RandomApply([transforms.ColorJitter(brightness=0.5)], p=0.7)
             )
             transform_x.append(
-                transforms.RandomApply([transforms.ColorJitter(contrast=0.5)], p=0.5)
+                transforms.RandomApply([transforms.ColorJitter(contrast=0.5)], p=0.7)
             )
             transform_x.append(
-                transforms.RandomApply([transforms.ColorJitter(saturation=0.5)], p=0.5)
+                transforms.RandomApply([transforms.ColorJitter(saturation=0.5)], p=0.7)
             )
         self.transform_x = transforms.Compose(
             transform_x
@@ -110,16 +110,12 @@ class BaseSingleClassDataset(Dataset):
         meta_path: str,
         img_size: int,
         class_name: str,
-        support=True,
-        support_path: str = None,
         logger=None,
     ):
-        if support_path:
-            assert "normal" in support_path, "Only support few-normal-shot meta"
+
         assert class_name is not None, "class_name should be provided"
         self.data_path = data_path
         self.img_size = img_size
-        self.support = support
         self.meta = []
         with open(meta_path, "r") as f:
             for line in f:
@@ -144,17 +140,6 @@ class BaseSingleClassDataset(Dataset):
                 transforms.ToTensor(),
             ]
         )
-
-        # Load support images
-        if support:
-            support_images = []
-            with open(support_path, "r", encoding="utf-8") as f:
-                for line in f:
-                    m = json.loads(line)
-                    if m["class_name"] == class_name:
-                        support_images.append(m)
-            # load support images
-            self.support_dataset = self.load_support_images(support_images)
 
         # logging
         if logger:
@@ -207,7 +192,9 @@ def get_dataset(
                 "./dataset/metadata", dataset_name, f"{shot}-shot.jsonl"
             )
         else:
-            meta_path = os.path.join("./dataset/metadata", dataset_name, "full-shot.jsonl")
+            meta_path = os.path.join(
+                "./dataset/metadata", dataset_name, "full-shot.jsonl"
+            )
 
         data_path = DATA_PATH[dataset_name.split("-")[0]]
         text_dataset = BaseDataset(data_path, meta_path, img_size, text=True)
@@ -223,7 +210,6 @@ def get_dataset(
                 meta_path=meta_path,
                 img_size=img_size,
                 class_name=class_name,
-                support=False,
                 logger=logger,
             )
             datasets[class_name] = image_dataset
@@ -238,7 +224,6 @@ def get_dataset(
                 meta_path=meta_path,
                 img_size=img_size,
                 class_name=class_name,
-                support=False,
                 logger=None,
             )
             datasets[class_name] = image_dataset

@@ -34,7 +34,9 @@ Put all the datasets under ``./data`` and use jsonkl files in ``./dataset/metada
  "mask_path": "xxxx/xxxx/xxx.png"}
 ```
 
-(Optional) the base data directory can be edited in ``./dataset/constants``. If you want to reproduce the results with few-shot training, you can generate corresponding jsonl files and put them in ``./dataset/metadata/{dataset}`` with ``{shot}-shot.jsonl`` as the file name.
+(Optional) the base data directory can be edited in ``./dataset/constants``. If you want to reproduce the results with few-shot training, you can generate corresponding jsonl files and put them in ``./dataset/metadata/{$dataset}`` with ``{$shot}-shot.jsonl`` as the file name. For few-shot training, we use ``$shot`` samples from each category to train the model.
+
+> Notice: Since the anomaly scenarios in VisA are closer to real situations, the default hyper-parameters are set according to the results trained on VisA. More analysis and discussion will be available.
 
 ### 3. Training & Evaluation
 ```bash
@@ -42,10 +44,11 @@ Put all the datasets under ``./data`` and use jsonkl files in ``./dataset/metada
 python train.py --shot $shot --save_path $save_path
 # evaluation
 python test.py --save_path $save_path --dataset $dataset
-# (Optional) evaluate all the datatsets
-bash test.sh
+# (Optional) we provide bash script for training and evaluating all the datasets
+bash scripts.sh
 ```
 Model definition is in ``./model/``. We thank [```open_clip```](https://github.com/mlfoundations/open_clip.git) for being open-source. To run the code, one has to download the weight of OpenCLIP ViT-L-14-336px and put it under ```./model/```.
+
 
 ## Citation
 If you use this work, please cite:

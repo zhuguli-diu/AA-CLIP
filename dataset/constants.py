@@ -1,4 +1,4 @@
-BASE_PATH = "./data"
+BASE_PATH = "/data/wenxinma"
 DATA_PATH = {
     "Brain": f"{BASE_PATH}/data/MedAD/Brain_AD",
     "Liver": f"{BASE_PATH}/data/MedAD/Liver_AD",

@@ -181,7 +181,7 @@ def main():
         "--model_name",
         type=str,
         default="ViT-L-14-336",
-        help="ViT-B-16-plus-240, ViT-L-14-336",
+        help="clip model to use (default: ViT-L-14-336)",
     )
     parser.add_argument("--img_size", type=int, default=518)
     parser.add_argument("--surgery_until_layer", type=int, default=20)
