@@ -169,7 +169,7 @@ def main():
     else:
         adapt_text = False
 
-    files = sorted(glob(args.save_path + "/image_adapter_15.pth"))
+    files = sorted(glob(args.save_path + "/image_adapter_*.pth"))
     assert len(files) > 0, "image adapter checkpoint not found"
     for file in files:
         checkpoint = torch.load(file)
