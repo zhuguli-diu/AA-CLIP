@@ -39,7 +39,7 @@ class BaseDataset(Dataset):
         ]
 
         transform_x = []
-        transform_x.append(AddGaussianNoise(std=1, p=0.7))
+        # transform_x.append(AddGaussianNoise(std=1, p=0.7))
         if not text:
             transform_x.append(
                 transforms.RandomApply([transforms.ColorJitter(brightness=0.5)], p=0.7)
