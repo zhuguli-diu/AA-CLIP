@@ -1,12 +1,7 @@
 # AA-CLIP: Enhancing Zero-shot Anomaly Detection via Anomaly-Aware CLIP
  **[CVPR 2025 paper]**
 
-[![Paper](https://img.shields.io/badge/CVPR-Paper-red)](https://arxiv.org/pdf/2503.06661) 
-<!-- [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://your-project-page.com) 
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/repo?style=social)](https://github.com/yourusername/repo)   -->
-[![Appendix](https://img.shields.io/badge/CVPR-Appendix-red)](https://drive.google.com/file/d/1PQrjCvWDyuM7W2ClJ-cJeD4YKJ1uPAzc/view?usp=drive_link)
-<!-- [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://your-project-page.com) 
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/repo?style=social)](https://github.com/yourusername/repo)   -->
+[![Paper](https://img.shields.io/badge/CVPR-Paper-red)](https://arxiv.org/pdf/2503.06661) [![Appendix](https://img.shields.io/badge/CVPR-Appendix-blue)](https://drive.google.com/file/d/1PQrjCvWDyuM7W2ClJ-cJeD4YKJ1uPAzc/view?usp=drive_link)
  Official Pytorch Implementation
 
 ![](pic/teaser.png)
