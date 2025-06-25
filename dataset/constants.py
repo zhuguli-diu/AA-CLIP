@@ -9,7 +9,8 @@ DATA_PATH = {
     "Colon_Kvasir": f"{BASE_PATH}/data/Colon/Kvasir",
     "BTAD": f"{BASE_PATH}/data/BTech_Dataset_transformed",
     "MPDD": f"{BASE_PATH}/data/MPDD",
-    "MVTec": f"{BASE_PATH}/data/mvtec_ad",
+    # "MVTec": f"{BASE_PATH}/data/mvtec_ad",
+    "MVTec": f"/kaggle/input/mvtec-ad",
     "VisA": f"{BASE_PATH}/data/VisA_20220922",
 }
 
