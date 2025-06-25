@@ -129,12 +129,17 @@ def main():
     setup_seed(args.seed)
     # check save_path and setting logger
     os.makedirs(args.save_path, exist_ok=True)
-    logger = logging.getLogger(__name__)
+    
+    # --- MODIFICATION START ---
+    # Configure logger to print directly to the console
     logging.basicConfig(
-        filename=os.path.join(args.save_path, "test.log"),
-        encoding="utf-8",
         level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        force=True # Ensures the logger re-configures if already set
     )
+    logger = logging.getLogger(__name__)
+    # --- MODIFICATION END ---
+
     logger.info("args: %s", vars(args))
     # set device
     use_cuda = torch.cuda.is_available()
@@ -244,9 +249,13 @@ def main():
                 domain=DOMAINS[args.dataset],
             )
             df.loc[len(df)] = Series(class_result_dict)
-        df.loc[len(df)] = df.mean()
-        df.loc[len(df) - 1]["class name"] = "Average"
-        logger.info("final results:\n%s", df.to_string(index=False, justify="center"))
+        df.loc[len(df)] = df.mean(numeric_only=True)
+        df.loc[len(df) - 1, "class name"] = "Average"
+        # --- MODIFICATION START ---
+        # Changed logger.info to print directly
+        print("\nFinal Results:")
+        print(df.to_string(index=False, justify="center"))
+        # --- MODIFICATION END ---
 
 
 if __name__ == "__main__":
